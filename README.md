@@ -7,16 +7,17 @@
 
 <p align="center">
   <a href="https://mobizon.com.br">
-    <img src=".github/default.svg" width="60%" alt="MobizonBR" title="MobizonBR">
+    <img src=".github/default.svg" width="60%" alt="Mobizon" title="Mobizon">
   </a>
 </p>
 
 <h2 align="center">Biblioteca para comunicação API HTTP Mobizon SMS</h2>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/caioagiani/mobizon-br">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/caioagiani/mobizon-br">
-  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/caioagiani/mobizon-br">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/caioagiani/mobizon-node">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/caioagiani/mobizon-node">
+  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/caioagiani/mobizon-node">
+  <img alt="NPM downloads" src="https://img.shields.io/npm/dt/mobizon-node?color=blue">
   <img alt="GitHub license" src="https://img.shields.io/badge/license-MIT-blue.svg">
 </p>
 
@@ -24,23 +25,23 @@
 
 Baixe o node em [nodejs.org](http://nodejs.org) e instale-o, caso ainda não tenha,
 
-Pacote: `npm i mobizon-br` ou `yarn add mobizon-br`
+Pacote: `npm i mobizon-node` ou `yarn add mobizon-node`
 
 ## Configuração:
 
 ```js
-const mobizon = require('mobizon-br');
+const { mobizon } = require('mobizon-node');
 
 mobizon.setConfig({
   apiServer: 'https://api.mobizon.com.br',
-  apiKey: process.env.API_KEY,
+  apiKey: 'br01xxxxxx',
   format: 'json',
 });
 ```
 
 ## Exemplos de uso
 
-Confira em [docs](https://github.com/caioagiani/mobizon-br/blob/master/docs) todos os response status code.
+Confira em [docs](https://github.com/caioagiani/mobizon-node/blob/master/docs) todos os response status code.
 
 ```js
 (async () => {
@@ -50,52 +51,48 @@ Confira em [docs](https://github.com/caioagiani/mobizon-br/blob/master/docs) tod
   console.log(getBalance);
 
   /** Encurtar URL */
-  const short = await mobizon.short({
-    fullLink: 'https://mobizon.com.br',
-    status: 1,
-    expirationDate: '',
-    comment: 'MobizonBR',
+  const createShort = await mobizon.createShort({
+    data: {
+      fullLink: 'https://mobizon.com.br',
+      status: 1,
+      expirationDate: '',
+      comment: 'Shortened link.',
+    },
   });
 
-  console.log(short);
+  console.log(createShort);
 
   /** Enviar SMS */
   const sendSms = await mobizon.sendSms({
-    recipient: process.env.NUMBER,
+    recipient: '5511900000000',
     from: '',
-    text: 'MobizonBR',
+    text: 'SMS sent by Mobizon.',
   });
 
   console.log(sendSms);
 })();
 ```
 
-Dê uma olhada em [example.js](https://github.com/caioagiani/mobizon-br/blob/master/example.js) para mais casos de uso.
+Dê uma olhada em [example.js](https://github.com/caioagiani/mobizon-node/blob/master/example.js) para mais casos de uso.
 
 ## Testes
 
 ```javascript
- jest --setupFiles dotenv/config --detectOpenHandles --forceExit
- PASS  tests/mobizon.test.js
-  Mobizon feature tests
-    ✓ should receive the account balance (323 ms)
-    ✓ should create short link (447 ms)
-    ✓ should get short link (349 ms)
-    ✓ should update short link (325 ms)
-    ✓ should delete short link (390 ms)
-    ✓ should send a test sms (610 ms)
-    ✓ should list the sms sent by id (312 ms)
-    ✓ should list the all sms sent (762 ms)
+yarn lint && jest --setupFiles dotenv/config --detectOpenHandles --forceExit
+$ eslint . --ext .js
+ PASS  __tests__/shortlink.test.js
+ PASS  __tests__/sms.test.js
+ PASS  __tests__/balance.test.js
 
-Test Suites: 1 passed, 1 total
-Tests:       8 passed, 8 total
+Test Suites: 3 passed, 3 total
+Tests:       14 passed, 14 total
 Snapshots:   0 total
-Time:        4.208 s
+Time:        7.013 s
 Ran all test suites.
-Done in 4.65s.
+Done in 8.41s.
 ```
 
 ## Licença
 
 Copyright © 2021 [caioagiani](https://github.com/caioagiani).<br />
-Este projeto é licenciado [MIT](https://github.com/caioagiani/mobizon-br/blob/master/LICENSE).
+Este projeto é licenciado [MIT](https://github.com/caioagiani/mobizon-node/blob/master/LICENSE).

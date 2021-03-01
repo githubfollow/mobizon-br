@@ -3,5 +3,6 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   testEnvironment: 'node',
-  testMatch: ['**/tests/**/*.test.js?(x)'],
+  transform: { '.(js|jsx|tx|tsx)': '@sucrase/jest-plugin' },
+  testMatch: ['**/__tests__/**/*.test.js?(x)'],
 };

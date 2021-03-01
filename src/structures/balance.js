@@ -1,9 +1,5 @@
-const { mobizonUrl } = require('../services/mobizon');
+import mobizon from '../services/mobizon';
 
-module.exports = {
-  get() {
-    const getBalance = mobizonUrl.call(this, 'user', 'getownbalance');
-
-    return getBalance;
-  },
+export default {
+  get: () => mobizon('user', 'getownbalance'),
 };
